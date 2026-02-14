@@ -1,101 +1,114 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zot</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zot</title>
 
-    // Dark mode default
-    if (localStorage.theme === 'light') {
-      document.documentElement.classList.remove('dark')
-    } else {
-      document.documentElement.classList.add('dark')
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    function toggleTheme() {
-      const html = document.documentElement
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark')
-        localStorage.theme = 'light'
-      } else {
-        html.classList.add('dark')
-        localStorage.theme = 'dark'
-      }
-    }
-  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: 'class' }
+
+if (localStorage.theme === 'light') {
+  document.documentElement.classList.remove('dark')
+} else {
+  document.documentElement.classList.add('dark')
+}
+
+function toggleTheme() {
+  const html = document.documentElement
+  if (html.classList.contains('dark')) {
+    html.classList.remove('dark')
+    localStorage.theme = 'light'
+  } else {
+    html.classList.add('dark')
+    localStorage.theme = 'dark'
+  }
+}
+</script>
+
+<style>
+body { font-family: 'Inter', sans-serif; }
+</style>
+
 </head>
 
 <body class="bg-white dark:bg-[#0d0d0d] text-black dark:text-white transition-colors duration-300 min-h-screen flex items-center justify-center px-6">
 
-  <div class="max-w-xl w-full text-center space-y-10">
+<div class="max-w-xl w-full text-center space-y-10">
 
-    <!-- Theme Toggle -->
-    <div class="flex justify-end">
-      <button onclick="toggleTheme()" class="text-sm opacity-60 hover:opacity-100 transition">
-        Toggle
-      </button>
-    </div>
+<div class="flex justify-end">
+<button onclick="toggleTheme()" class="text-sm opacity-60 hover:opacity-100 transition">
+Toggle
+</button>
+</div>
 
-    <!-- Hero -->
-    <div class="space-y-2 animate-fade">
-      <h1 class="text-5xl font-semibold tracking-tight">Zot</h1>
-      <p class="text-sm opacity-60">Trofym</p>
-    </div>
+<div class="space-y-2">
+<h1 class="text-5xl font-semibold tracking-tight">Zot</h1>
+<p class="text-sm opacity-60">Trofym</p>
+</div>
 
-    <hr class="border-gray-200 dark:border-gray-800">
+<hr class="border-gray-200 dark:border-gray-800">
 
-    <!-- Links -->
-    <div class="space-y-4">
+<div class="space-y-4">
 
-      <a href="https://github.com/z9ds" target="_blank"
-        class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-gray-900">
-        <div class="text-lg font-medium">GitHub</div>
-        <div class="text-sm opacity-60 mt-1">Code experiments and things I’m learning.</div>
-      </a>
+<a href="https://www.roblox.com/users/profile" target="_blank"
+class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+<div class="text-lg font-medium">Roblox</div>
+<div class="text-sm opacity-60 mt-1">Projects, scripts, and community work.</div>
+</a>
 
-      <a href="https://roblox.com" target="_blank"
-        class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-gray-900">
-        <div class="text-lg font-medium">Roblox</div>
-        <div class="text-sm opacity-60 mt-1">Projects, scripts, and community work.</div>
-      </a>
+<a href="https://discord.com/users/z9ds" target="_blank"
+class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
 
-      <a href="https://discord.com" target="_blank"
-        class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-gray-900">
-        <div class="text-lg font-medium">Discord</div>
-        <div class="text-sm opacity-60 mt-1">Where I help people and manage groups.</div>
-      </a>
+<div class="text-lg font-medium flex items-center justify-center gap-2">
+Discord
+<span id="discord-status" class="w-2 h-2 rounded-full bg-gray-400"></span>
+</div>
 
-      <a href="https://pinterest.com" target="_blank"
-        class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-gray-900">
-        <div class="text-lg font-medium">Pinterest</div>
-        <div class="text-sm opacity-60 mt-1">Visual ideas and things I like.</div>
-      </a>
+<div class="text-sm opacity-60 mt-1">Click to open my Discord.</div>
 
-    </div>
+</a>
 
-    <hr class="border-gray-200 dark:border-gray-800">
+<a href="https://pinterest.com" target="_blank"
+class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+<div class="text-lg font-medium">Pinterest</div>
+<div class="text-sm opacity-60 mt-1">Visual ideas and things I like.</div>
+</a>
 
-    <!-- About -->
-    <div class="space-y-2 text-sm opacity-80">
-      <p>Born in Ukraine.</p>
-      <p>Into MMA, boxing, weightlifting.</p>
-      <p>Interested in tech and systems.</p>
-      <p>I’ve traveled a lot and enjoy learning.</p>
-    </div>
+</div>
 
-    <hr class="border-gray-200 dark:border-gray-800">
+<hr class="border-gray-200 dark:border-gray-800">
 
-    <!-- Footer -->
-    <div class="text-xs opacity-50 pt-4">
-      © 2026 Zot
-    </div>
+<div class="space-y-2 text-sm opacity-80">
+<p>Born in Ukraine.</p>
+<p>Into MMA, boxing, weightlifting.</p>
+<p>Interested in tech and systems.</p>
+<p>I’ve traveled a lot and enjoy learning.</p>
+</div>
 
-  </div>
+<hr class="border-gray-200 dark:border-gray-800">
+
+<div class="text-xs opacity-50 pt-4">
+© 2026 Zot
+</div>
+
+</div>
+
+<script>
+fetch("https://api.lanyard.rest/v1/users/1261427193746292848") 
+.then(response => response.json())
+.then(data => {
+  const statusDot = document.getElementById("discord-status")
+  const status = data.data.discord_status
+  if (status === "online") statusDot.className = "w-2 h-2 rounded-full bg-green-500"
+  if (status === "idle") statusDot.className = "w-2 h-2 rounded-full bg-yellow-400"
+  if (status === "dnd") statusDot.className = "w-2 h-2 rounded-full bg-red-500"
+  if (status === "offline") statusDot.className = "w-2 h-2 rounded-full bg-gray-500"
+})
+</script>
 
 </body>
 </html>
