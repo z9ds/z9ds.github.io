@@ -6,7 +6,6 @@
 <title>Z 9 T</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
@@ -40,6 +39,9 @@ body { font-family: 'Inter', sans-serif; }
 
 <div class="max-w-xl w-full text-center space-y-10">
 
+<!-- Spotify Status -->
+<div id="spotify-container" class="text-sm opacity-80 hidden"></div>
+
 <!-- Toggle -->
 <div class="flex justify-end">
 <button onclick="toggleTheme()" 
@@ -61,26 +63,20 @@ class="text-sm opacity-70 hover:opacity-100 transition focus:outline-none">
 
 <a href="https://www.roblox.com/users/4377530875/profile" target="_blank"
 class="block border border-gray-300 dark:border-white rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-
 <div class="text-lg font-medium">Roblox</div>
-<div class="text-sm opacity-70 mt-1">Projects, scripts, and community work.</div>
-
+<div class="text-sm opacity-70 mt-1">Scripting, testing, and gaming.</div>
 </a>
 
 <a href="https://discord.com/users/1261427193746292848" target="_blank"
 class="block border border-gray-300 dark:border-white rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-
 <div class="text-lg font-medium">Discord</div>
 <div class="text-sm opacity-70 mt-1">Open my Discord profile.</div>
-
 </a>
 
 <a href="https://www.pinterest.com/ykzott/_profile/_created/" target="_blank"
 class="block border border-gray-300 dark:border-white rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-
 <div class="text-lg font-medium">Pinterest</div>
 <div class="text-sm opacity-70 mt-1">Visual ideas and things I like.</div>
-
 </a>
 
 </div>
@@ -103,6 +99,22 @@ class="block border border-gray-300 dark:border-white rounded-xl p-5 transition 
 </div>
 
 </div>
+
+<script>
+const userId = "1261427193746292848"
+
+fetch(`https://api.lanyard.rest/v1/users/${userId}`)
+.then(res => res.json())
+.then(data => {
+  if (!data.success) return
+
+  if (data.data.listening_to_spotify && data.data.spotify) {
+    const container = document.getElementById("spotify-container")
+    container.classList.remove("hidden")
+    container.innerText = `Listening to: ${data.data.spotify.song} — ${data.data.spotify.artist} on Spotify`
+  }
+})
+</script>
 
 </body>
 </html>
