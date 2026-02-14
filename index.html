@@ -54,13 +54,13 @@ Toggle
 
 <div class="space-y-4">
 
-<a href="https://www.roblox.com/users/profile" target="_blank"
+<a href="https://www.roblox.com/users/4377530875/profile" target="_blank"
 class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
 <div class="text-lg font-medium">Roblox</div>
 <div class="text-sm opacity-60 mt-1">Projects, scripts, and community work.</div>
 </a>
 
-<a href="https://discord.com/users/z9ds" target="_blank"
+<a href="https://discord.com/users/ykzott" target="_blank"
 class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
 
 <div class="text-lg font-medium flex items-center justify-center gap-2">
@@ -68,11 +68,13 @@ Discord
 <span id="discord-status" class="w-2 h-2 rounded-full bg-gray-400"></span>
 </div>
 
-<div class="text-sm opacity-60 mt-1">Click to open my Discord.</div>
+<div id="spotify-activity" class="text-sm opacity-60 mt-1">
+Loading status...
+</div>
 
 </a>
 
-<a href="https://pinterest.com" target="_blank"
+<a href="https://www.pinterest.com/ykzott/_profile/_created/" target="_blank"
 class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
 <div class="text-lg font-medium">Pinterest</div>
 <div class="text-sm opacity-60 mt-1">Visual ideas and things I like.</div>
@@ -83,7 +85,7 @@ class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transiti
 <hr class="border-gray-200 dark:border-gray-800">
 
 <div class="space-y-2 text-sm opacity-80">
-<p>Born in Ukraine.</p>
+<p>From Ukraine.</p>
 <p>Into MMA, boxing, weightlifting.</p>
 <p>Interested in tech and systems.</p>
 <p>I’ve traveled a lot and enjoy learning.</p>
@@ -98,15 +100,27 @@ class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transiti
 </div>
 
 <script>
-fetch("https://api.lanyard.rest/v1/users/1261427193746292848") 
-.then(response => response.json())
+const userId = "1261427193746292848"
+
+fetch(`https://api.lanyard.rest/v1/users/${userId}`)
+.then(res => res.json())
 .then(data => {
   const statusDot = document.getElementById("discord-status")
+  const spotifyText = document.getElementById("spotify-activity")
   const status = data.data.discord_status
+
   if (status === "online") statusDot.className = "w-2 h-2 rounded-full bg-green-500"
   if (status === "idle") statusDot.className = "w-2 h-2 rounded-full bg-yellow-400"
   if (status === "dnd") statusDot.className = "w-2 h-2 rounded-full bg-red-500"
   if (status === "offline") statusDot.className = "w-2 h-2 rounded-full bg-gray-500"
+
+  if (data.data.listening_to_spotify) {
+    const song = data.data.spotify.song
+    const artist = data.data.spotify.artist
+    spotifyText.innerText = `- Listening to ${song} by ${artist}`
+  } else {
+    spotifyText.innerText = "- Not listening to Spotify"
+  }
 })
 </script>
 
