@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zot</title>
+<title>Z 9 T</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
+
 <script>
 tailwind.config = { darkMode: 'class' }
 
@@ -35,55 +36,58 @@ body { font-family: 'Inter', sans-serif; }
 
 </head>
 
-<body class="bg-white dark:bg-[#0d0d0d] text-black dark:text-white transition-colors duration-300 min-h-screen flex items-center justify-center px-6">
+<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 min-h-screen flex items-center justify-center px-6">
 
 <div class="max-w-xl w-full text-center space-y-10">
 
+<!-- Toggle -->
 <div class="flex justify-end">
-<button onclick="toggleTheme()" class="text-sm opacity-60 hover:opacity-100 transition">
-Toggle
+<button onclick="toggleTheme()" 
+class="text-sm opacity-70 hover:opacity-100 transition focus:outline-none">
+💡 Dark / Light Mode
 </button>
 </div>
 
+<!-- Hero -->
 <div class="space-y-2">
-<h1 class="text-5xl font-semibold tracking-tight">Zot</h1>
-<p class="text-sm opacity-60">Trofym</p>
+<h1 class="text-5xl font-semibold tracking-tight">Ｚ9Ｔ</h1>
+<p class="text-sm opacity-60">𝒵𝑜𝓉 (Trofym)</p>
 </div>
 
-<hr class="border-gray-200 dark:border-gray-800">
+<hr class="border-gray-300 dark:border-white/20">
 
+<!-- Links -->
 <div class="space-y-4">
 
 <a href="https://www.roblox.com/users/4377530875/profile" target="_blank"
-class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+class="block border border-gray-300 dark:border-white rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+
 <div class="text-lg font-medium">Roblox</div>
-<div class="text-sm opacity-60 mt-1">Projects, scripts, and community work.</div>
+<div class="text-sm opacity-70 mt-1">Projects, scripts, and community work.</div>
+
 </a>
 
-<a href="https://discord.com/users/ykzott" target="_blank"
-class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+<a href="https://discord.com/users/1261427193746292848" target="_blank"
+class="block border border-gray-300 dark:border-white rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
 
-<div class="text-lg font-medium flex items-center justify-center gap-2">
-Discord
-<span id="discord-status" class="w-2 h-2 rounded-full bg-gray-400"></span>
-</div>
-
-<div id="spotify-activity" class="text-sm opacity-60 mt-1">
-Loading status...
-</div>
+<div class="text-lg font-medium">Discord</div>
+<div class="text-sm opacity-70 mt-1">Open my Discord profile.</div>
 
 </a>
 
 <a href="https://www.pinterest.com/ykzott/_profile/_created/" target="_blank"
-class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+class="block border border-gray-300 dark:border-white rounded-xl p-5 transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+
 <div class="text-lg font-medium">Pinterest</div>
-<div class="text-sm opacity-60 mt-1">Visual ideas and things I like.</div>
+<div class="text-sm opacity-70 mt-1">Visual ideas and things I like.</div>
+
 </a>
 
 </div>
 
-<hr class="border-gray-200 dark:border-gray-800">
+<hr class="border-gray-300 dark:border-white/20">
 
+<!-- About -->
 <div class="space-y-2 text-sm opacity-80">
 <p>From Ukraine.</p>
 <p>Into MMA, boxing, weightlifting.</p>
@@ -91,38 +95,14 @@ class="block border border-gray-200 dark:border-gray-800 rounded-xl p-5 transiti
 <p>I’ve traveled a lot and enjoy learning.</p>
 </div>
 
-<hr class="border-gray-200 dark:border-gray-800">
+<hr class="border-gray-300 dark:border-white/20">
 
+<!-- Footer -->
 <div class="text-xs opacity-50 pt-4">
-© 2026 Zot
+© 2026 Z9T
 </div>
 
 </div>
-
-<script>
-const userId = "1261427193746292848"
-
-fetch(`https://api.lanyard.rest/v1/users/${userId}`)
-.then(res => res.json())
-.then(data => {
-  const statusDot = document.getElementById("discord-status")
-  const spotifyText = document.getElementById("spotify-activity")
-  const status = data.data.discord_status
-
-  if (status === "online") statusDot.className = "w-2 h-2 rounded-full bg-green-500"
-  if (status === "idle") statusDot.className = "w-2 h-2 rounded-full bg-yellow-400"
-  if (status === "dnd") statusDot.className = "w-2 h-2 rounded-full bg-red-500"
-  if (status === "offline") statusDot.className = "w-2 h-2 rounded-full bg-gray-500"
-
-  if (data.data.listening_to_spotify) {
-    const song = data.data.spotify.song
-    const artist = data.data.spotify.artist
-    spotifyText.innerText = `- Listening to ${song} by ${artist}`
-  } else {
-    spotifyText.innerText = "- Not listening to Spotify"
-  }
-})
-</script>
 
 </body>
 </html>
