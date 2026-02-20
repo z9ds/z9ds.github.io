@@ -3,310 +3,268 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>z9ds</title>
+<title>Z9DS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
 
-html, body {
-  width:100%;
-  height:100%;
+html,body{
+width:100%;
+height:100%;
+background:#000;
+overflow:hidden;
+font-family:'Inter',sans-serif;
+color:#fff;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
 }
 
-body {
-  font-family:'Inter', sans-serif;
-  background:#000;
-  overflow:hidden;
-  color:#fff;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
+/* ===== INTRO OVERLAY ===== */
+
+#intro{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.75);
+backdrop-filter:blur(12px);
+z-index:9999;
+transition:opacity 1s ease;
 }
 
-canvas {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  z-index:-1;
+#enterBtn{
+padding:18px 42px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.4);
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(8px);
+color:#fff;
+font-size:16px;
+letter-spacing:2px;
+cursor:pointer;
+transition:.35s ease;
 }
 
-.fade-in {
-  opacity:0;
-  transform:translateY(10px);
-  animation:fadeIn .7s ease forwards;
+#enterBtn:hover{
+background:rgba(255,255,255,.15);
+box-shadow:0 0 30px rgba(255,255,255,.3);
+transform:scale(1.05);
 }
 
-.fade-in.delay-2 { animation-delay:.25s; }
-.fade-in.delay-3 { animation-delay:.4s; }
-
-@keyframes fadeIn {
-  to { opacity:1; transform:translateY(0); }
+/* crumble animation */
+.crumble{
+animation:crumble 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
 
-.glow {
-  text-shadow:
-    0 0 8px rgba(255,255,255,.55),
-    0 0 20px rgba(255,255,255,.25);
+@keyframes crumble{
+0%{transform:scale(1);filter:url(#distort)}
+50%{transform:scale(.9);opacity:.9}
+100%{transform:scale(0) rotate(15deg);opacity:0}
 }
 
-.center {
-  position:fixed;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
+/* ===== MAIN SITE ===== */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+z-index:-1;
 }
 
-h1 {
-  font-size:clamp(44px,6vw,72px);
-  letter-spacing:3px;
+.center{
+position:fixed;
+inset:0;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+opacity:0;
+animation:fadeIn 1.4s ease forwards;
+animation-delay:1.2s;
 }
 
-.subtitle {
-  margin-top:8px;
-  font-size:13px;
-  letter-spacing:3px;
-  opacity:.45;
+@keyframes fadeIn{
+to{opacity:1}
 }
 
-.links {
-  margin-top:42px;
-  display:flex;
-  gap:18px;
-  justify-content:center;
-  flex-wrap:wrap;
+h1{
+font-size:clamp(44px,6vw,72px);
+letter-spacing:3px;
+text-shadow:
+0 0 8px rgba(255,255,255,.55),
+0 0 20px rgba(255,255,255,.25);
 }
 
-.links a {
-  padding:14px 28px;
-  border-radius:14px;
-  background:rgba(255,255,255,.14);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.35);
-  text-decoration:none;
-  color:#fff;
-  font-size:16px;
-  transition:.25s ease;
+.subtitle{
+margin-top:8px;
+font-size:13px;
+letter-spacing:3px;
+opacity:.4;
+text-shadow:
+0 0 6px rgba(255,255,255,.4);
 }
 
-.links a:hover {
-  transform:translateY(-3px) scale(1.02);
-  background:rgba(255,255,255,.18);
-  box-shadow:0 0 30px rgba(255,255,255,.3);
+.links{
+margin-top:42px;
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+justify-content:center;
 }
 
-@media (max-width:640px) {
-  .links { flex-direction:column; align-items:center; }
-  .links a { width:220px; }
+.links a{
+padding:14px 28px;
+border-radius:14px;
+background:rgba(255,255,255,.14);
+border:1px solid rgba(255,255,255,.35);
+text-decoration:none;
+color:#fff;
+transition:.25s ease;
 }
 
-.spotify {
-  position:fixed;
-  bottom:24px;
-  left:0;
-  right:0;
-  margin:0 auto;
-  width:min(720px,94vw);
-  display:none;
-  align-items:center;
-  gap:14px;
-  padding:12px 16px;
-  border-radius:18px;
-  background:rgba(255,255,255,.14);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.3);
+.links a:hover{
+transform:translateY(-3px) scale(1.02);
+background:rgba(255,255,255,.18);
+box-shadow:0 0 30px rgba(255,255,255,.3);
 }
 
-@media (max-width:640px) {
-  .spotify {
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-  }
+/* spotify */
+.spotify{
+position:fixed;
+bottom:24px;
+left:0;
+right:0;
+margin:0 auto;
+width:min(720px,94vw);
+display:none;
+align-items:center;
+gap:14px;
+padding:12px 16px;
+border-radius:18px;
+background:rgba(255,255,255,.14);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(12px);
 }
 
-.album {
-  width:46px;
-  height:46px;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.25);
-}
-
-.album img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.spotify-main { flex:1; min-width:0; }
-
-.spotify-title { font-size:12px; opacity:.7; }
-
-.track {
-  font-size:14px;
-  font-weight:600;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.artist { font-size:12px; opacity:.7; }
-
-.eq {
-  display:flex;
-  gap:3px;
-  align-items:flex-end;
-  height:18px;
-}
-
-.bar {
-  width:3px;
-  border-radius:6px;
-  background:white;
-  animation:bounce .9s ease-in-out infinite;
-}
-
-.bar:nth-child(1){ height:6px; animation-delay:0ms; }
-.bar:nth-child(2){ height:14px; animation-delay:120ms; }
-.bar:nth-child(3){ height:9px; animation-delay:240ms; }
-.bar:nth-child(4){ height:16px; animation-delay:360ms; }
-
-@keyframes bounce {
-  0%,100% { transform:scaleY(.55); opacity:.75; }
-  50% { transform:scaleY(1.15); opacity:1; }
-}
 </style>
 </head>
-
 <body>
+
+<!-- SVG DISTORTION FILTER -->
+<svg width="0" height="0">
+<filter id="distort">
+<feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="60"/>
+</filter>
+</svg>
+
+<div id="intro">
+<button id="enterBtn">click to enter</button>
+</div>
 
 <canvas id="bg"></canvas>
 
-<div class="center fade-in">
-  <h1 class="glow">z9ds</h1>
-  <p class="glow subtitle">ZOT</p>
+<div class="center">
+<h1>z9ds</h1>
+<p class="subtitle">ZOT</p>
 
-  <div class="links fade-in delay-2">
-    <a href="https://www.roblox.com/users/4377530875/profile" target="_blank">𝐑𝐨𝐛𝐥𝐨𝐱</a>
-    <a href="https://discord.com/users/1261427193746292848" target="_blank">𝐃𝐢𝐬𝐜𝐨𝐫𝐝</a>
-    <a href="https://pin.it/2drJcpE1C" target="_blank">𝐏𝐢𝐧𝐭𝐞𝐫𝐞𝐬𝐭</a>
-  </div>
+<div class="links">
+<a href="https://www.roblox.com/users/4377530875/profile" target="_blank">𝐑𝐨𝐛𝐥𝐨𝐱</a>
+<a href="https://discord.com/users/1261427193746292848" target="_blank">𝐃𝐢𝐬𝐜𝐨𝐫𝐝</a>
+<a href="https://pin.it/2drJcpE1C" target="_blank">𝐏𝐢𝐧𝐭𝐞𝐫𝐞𝐬𝐭</a>
 </div>
-
-<div id="spotify" class="spotify glow fade-in delay-3">
-  <div class="album"><img id="albumArt"></div>
-  <div class="spotify-main">
-    <div class="spotify-title">Listening on Spotify</div>
-    <div id="track" class="track"></div>
-    <div id="artist" class="artist"></div>
-  </div>
-  <div class="eq">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-  </div>
 </div>
 
 <script>
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
 
-let particles = [];
-let cx, cy;
+/* INTRO TRANSITION */
+const intro=document.getElementById("intro");
+const btn=document.getElementById("enterBtn");
+
+btn.addEventListener("click",()=>{
+intro.classList.add("crumble");
+setTimeout(()=>{
+intro.style.display="none";
+},1400);
+});
+
+/* GALAXY */
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+let particles=[];
+let cx,cy;
 
 function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  cx = canvas.width / 2;
-  cy = canvas.height / 2;
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+cx=canvas.width/2;
+cy=canvas.height/2;
 }
 
-function createParticles(){
-  particles = [];
-  const count = window.innerWidth < 768 ? 900 : 2000;
-  const max = Math.sqrt(canvas.width**2 + canvas.height**2) / 2;
+function create(){
+particles=[];
+const count=window.innerWidth<768?900:2000;
+const max=Math.sqrt(canvas.width**2+canvas.height**2)/2;
 
-  for(let i=0;i<count;i++){
-    particles.push({
-      angle:Math.random()*Math.PI*2,
-      radius:Math.random()*max,
-      speed:Math.random()*0.0015 + 0.0005,
-      size:Math.random()<0.15 ? 2 : 1,
-      depth:Math.random()*0.7 + 0.3
-    });
-  }
+for(let i=0;i<count;i++){
+particles.push({
+angle:Math.random()*Math.PI*2,
+radius:Math.random()*max,
+speed:Math.random()*0.0015+0.0005,
+size:Math.random()<0.15?2:1,
+depth:Math.random()*0.7+0.3
+});
+}
 }
 
 function draw(){
-  ctx.fillStyle="#000";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#000";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  const g = ctx.createRadialGradient(
-    cx,cy,0,
-    cx,cy,Math.max(canvas.width,canvas.height)
-  );
-  g.addColorStop(0,"rgba(255,255,255,0.9)");
-  g.addColorStop(1,"rgba(255,255,255,0.05)");
+const g=ctx.createRadialGradient(
+cx,cy,0,
+cx,cy,Math.max(canvas.width,canvas.height)
+);
+g.addColorStop(0,"rgba(255,255,255,.9)");
+g.addColorStop(1,"rgba(255,255,255,.05)");
 
-  ctx.fillStyle=g;
+ctx.fillStyle=g;
 
-  particles.forEach(p=>{
-    p.angle += p.speed*(0.6+p.depth);
-    const x = cx + Math.cos(p.angle)*p.radius;
-    const y = cy + Math.sin(p.angle)*p.radius;
-    ctx.globalAlpha=p.depth;
-    ctx.fillRect(x,y,p.size,p.size);
-  });
+particles.forEach(p=>{
+p.angle+=p.speed*(0.6+p.depth);
+const x=cx+Math.cos(p.angle)*p.radius;
+const y=cy+Math.sin(p.angle)*p.radius;
+ctx.globalAlpha=p.depth;
+ctx.fillRect(x,y,p.size,p.size);
+});
 
-  ctx.globalAlpha=1;
-  requestAnimationFrame(draw);
+ctx.globalAlpha=1;
+requestAnimationFrame(draw);
 }
 
 window.addEventListener("resize",()=>{
-  resize();
-  createParticles();
+resize();
+create();
 });
 
 window.addEventListener("mousemove",e=>{
-  if(window.innerWidth<768) return;
-  cx = canvas.width/2 + (e.clientX-canvas.width/2)*0.05;
-  cy = canvas.height/2 + (e.clientY-canvas.height/2)*0.05;
+if(window.innerWidth<768)return;
+cx=canvas.width/2+(e.clientX-canvas.width/2)*0.05;
+cy=canvas.height/2+(e.clientY-canvas.height/2)*0.05;
 });
 
 resize();
-createParticles();
+create();
 draw();
 
-const userId="1261427193746292848";
-
-async function updateSpotify(){
-  try{
-    const r=await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
-    const d=await r.json();
-    if(d.success && d.data.listening_to_spotify){
-      const s=d.data.spotify;
-      document.getElementById("spotify").style.display="flex";
-      document.getElementById("track").textContent=s.song;
-      document.getElementById("artist").textContent=s.artist;
-      document.getElementById("albumArt").src=s.album_art_url;
-    } else {
-      document.getElementById("spotify").style.display="none";
-    }
-  } catch {
-    document.getElementById("spotify").style.display="none";
-  }
-}
-
-updateSpotify();
-setInterval(updateSpotify,15000);
 </script>
 
 </body>
