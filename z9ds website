@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Z9T</title>
+<title>z9ds</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
@@ -75,13 +75,13 @@ canvas {
   text-decoration:none;
   color:#fff;
   font-size:16px;
-  transition:all 0.2s ease;
+  transition:all 0.25s ease;
 }
 
 .links a:hover {
-  transform:translateY(-2px);
-  background:rgba(255,255,255,0.20);
-  box-shadow:0 0 22px rgba(255,255,255,0.35);
+  transform:translateY(-3px);
+  background:rgba(255,255,255,0.22);
+  box-shadow:0 0 28px rgba(255,255,255,0.4);
 }
 
 @media (max-width:640px) {
@@ -94,24 +94,20 @@ canvas {
   }
 }
 
-/* Spotify Player PERFECT CENTER */
+/* Spotify */
 .spotify {
   position:fixed;
   bottom:24px;
   left:0;
   right:0;
   margin:0 auto;
-
   width:min(720px,94vw);
-
   display:none;
   align-items:center;
   justify-content:center;
   gap:14px;
-
   padding:12px 16px;
   border-radius:18px;
-
   background:rgba(255,255,255,0.14);
   backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,0.32);
@@ -139,15 +135,9 @@ canvas {
   object-fit:cover;
 }
 
-.spotify-main {
-  flex:1;
-  min-width:0;
-}
+.spotify-main { flex:1; min-width:0; }
 
-.spotify-title {
-  font-size:12px;
-  opacity:0.75;
-}
+.spotify-title { font-size:12px; opacity:0.75; }
 
 .track {
   font-size:14px;
@@ -157,10 +147,7 @@ canvas {
   text-overflow:ellipsis;
 }
 
-.artist {
-  font-size:12px;
-  opacity:0.75;
-}
+.artist { font-size:12px; opacity:0.75; }
 
 /* Equalizer */
 .eq {
@@ -200,8 +187,7 @@ canvas {
   <div class="links fade-in delay-2">
     <a href="https://www.roblox.com/users/4377530875/profile" target="_blank">Roblox</a>
     <a href="https://discord.com/users/1261427193746292848" target="_blank">Discord</a>
-    <a href="https://www.pinterest.com/ykzott/_profile/_created/" target="_blank">Pinterest</a>
-  </div>
+    <a href="https://pin.it/2drJcpE1C" target="_blank">Pinterest</a>  </div>
 </div>
 
 <div id="spotify" class="spotify glow fade-in delay-3">
@@ -220,7 +206,6 @@ canvas {
 </div>
 
 <script>
-/* Swirl PERFECT CENTER */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -229,43 +214,66 @@ function resize() {
   canvas.height = window.innerHeight;
 }
 resize();
-window.addEventListener("resize", resize);
 
 let particles = [];
-const COUNT = 1100;
-
-for (let i = 0; i < COUNT; i++) {
-  particles.push({
-    angle: Math.random() * Math.PI * 2,
-    radius: Math.random() * 500,
-    speed: Math.random() * 0.002 + 0.001,
-    size: Math.random() < 0.12 ? 2 : 1
-  });
-}
-
 let cx = canvas.width / 2;
 let cy = canvas.height / 2;
 
+function initParticles() {
+  const isMobile = window.innerWidth < 768;
+  const count = isMobile ? 900 : 2000;
+  particles = [];
+
+  const maxRadius = Math.sqrt(canvas.width**2 + canvas.height**2) / 2;
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      angle: Math.random() * Math.PI * 2,
+      radius: Math.random() * maxRadius,
+      speed: Math.random() * 0.0015 + 0.0005,
+      size: Math.random() < 0.15 ? 2 : 1,
+      depth: Math.random() * 0.7 + 0.3
+    });
+  }
+}
+
+initParticles();
+
+window.addEventListener("resize", () => {
+  resize();
+  initParticles();
+});
+
 window.addEventListener("mousemove", (e) => {
-  const dx = (e.clientX - canvas.width/2) * 0.06;
-  const dy = (e.clientY - canvas.height/2) * 0.06;
-  cx = canvas.width/2 + dx;
-  cy = canvas.height/2 + dy;
+  if (window.innerWidth < 768) return;
+  cx = canvas.width / 2 + (e.clientX - canvas.width/2) * 0.05;
+  cy = canvas.height / 2 + (e.clientY - canvas.height/2) * 0.05;
 });
 
 function animate() {
   ctx.fillStyle = "#000";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle = "white";
+  const gradient = ctx.createRadialGradient(
+    cx, cy, 0,
+    cx, cy, Math.max(canvas.width, canvas.height)
+  );
+
+  gradient.addColorStop(0, "rgba(255,255,255,0.9)");
+  gradient.addColorStop(1, "rgba(255,255,255,0.05)");
+
+  ctx.fillStyle = gradient;
 
   particles.forEach(p => {
-    p.angle += p.speed;
+    p.angle += p.speed * p.depth;
     const x = cx + Math.cos(p.angle) * p.radius;
     const y = cy + Math.sin(p.angle) * p.radius;
+
+    ctx.globalAlpha = p.depth;
     ctx.fillRect(x,y,p.size,p.size);
   });
 
+  ctx.globalAlpha = 1;
   requestAnimationFrame(animate);
 }
 animate();
