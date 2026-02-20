@@ -1,71 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z9DS</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
-html,body{
-width:100%;
-height:100%;
-background:#000;
-overflow:hidden;
-font-family:'Inter',sans-serif;
-color:#fff;
--webkit-font-smoothing:antialiased;
-text-rendering:optimizeLegibility;
-}
-
-/* ===== INTRO OVERLAY ===== */
-
-#intro{
-position:fixed;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-background:rgba(0,0,0,0.75);
-backdrop-filter:blur(12px);
-z-index:9999;
-transition:opacity 1s ease;
-}
-
-#enterBtn{
-padding:18px 42px;
-border-radius:18px;
-border:1px solid rgba(255,255,255,.4);
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(8px);
-color:#fff;
-font-size:16px;
-letter-spacing:2px;
-cursor:pointer;
-transition:.35s ease;
-}
-
-#enterBtn:hover{
-background:rgba(255,255,255,.15);
-box-shadow:0 0 30px rgba(255,255,255,.3);
-transform:scale(1.05);
-}
-
-/* crumble animation */
-.crumble{
-animation:crumble 1.4s cubic-bezier(.2,.8,.2,1) forwards;
-}
-
-@keyframes crumble{
-0%{transform:scale(1);filter:url(#distort)}
-50%{transform:scale(.9);opacity:.9}
-100%{transform:scale(0) rotate(15deg);opacity:0}
-}
-
-/* ===== MAIN SITE ===== */
+html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Inter',sans-serif;color:#fff}
 
 canvas{
 position:fixed;
@@ -73,7 +16,39 @@ top:0;
 left:0;
 width:100vw;
 height:100vh;
-z-index:-1;
+z-index:-1
+}
+
+#gate{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.75);
+backdrop-filter:blur(12px);
+z-index:10;
+transition:opacity .8s ease
+}
+
+#gate span{
+font-size:14px;
+letter-spacing:3px;
+opacity:.7;
+cursor:pointer;
+transition:.3s ease
+}
+
+#gate span:hover{opacity:1}
+
+.fold{
+animation:collapse .9s cubic-bezier(.4,.05,.2,1) forwards
+}
+
+@keyframes collapse{
+0%{transform:scale(1)}
+50%{transform:scale(.94)}
+100%{transform:scale(0);opacity:0}
 }
 
 .center{
@@ -84,31 +59,24 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 text-align:center;
-padding:20px;
 opacity:0;
-animation:fadeIn 1.4s ease forwards;
-animation-delay:1.2s;
+animation:fade 1.2s ease forwards;
+animation-delay:.8s
 }
 
-@keyframes fadeIn{
-to{opacity:1}
-}
+@keyframes fade{to{opacity:1}}
 
 h1{
 font-size:clamp(44px,6vw,72px);
 letter-spacing:3px;
-text-shadow:
-0 0 8px rgba(255,255,255,.55),
-0 0 20px rgba(255,255,255,.25);
+text-shadow:0 0 8px rgba(255,255,255,.55),0 0 20px rgba(255,255,255,.25)
 }
 
-.subtitle{
+.sub{
 margin-top:8px;
 font-size:13px;
 letter-spacing:3px;
-opacity:.4;
-text-shadow:
-0 0 6px rgba(255,255,255,.4);
+opacity:.4
 }
 
 .links{
@@ -116,7 +84,7 @@ margin-top:42px;
 display:flex;
 gap:18px;
 flex-wrap:wrap;
-justify-content:center;
+justify-content:center
 }
 
 .links a{
@@ -126,55 +94,31 @@ background:rgba(255,255,255,.14);
 border:1px solid rgba(255,255,255,.35);
 text-decoration:none;
 color:#fff;
-transition:.25s ease;
+transition:.25s ease
 }
 
 .links a:hover{
 transform:translateY(-3px) scale(1.02);
 background:rgba(255,255,255,.18);
-box-shadow:0 0 30px rgba(255,255,255,.3);
+box-shadow:0 0 30px rgba(255,255,255,.25)
 }
 
-/* spotify */
-.spotify{
-position:fixed;
-bottom:24px;
-left:0;
-right:0;
-margin:0 auto;
-width:min(720px,94vw);
-display:none;
-align-items:center;
-gap:14px;
-padding:12px 16px;
-border-radius:18px;
-background:rgba(255,255,255,.14);
-border:1px solid rgba(255,255,255,.3);
-backdrop-filter:blur(12px);
+@media(max-width:640px){
+.links{flex-direction:column;align-items:center}
+.links a{width:220px}
 }
-
 </style>
 </head>
+
 <body>
 
-<!-- SVG DISTORTION FILTER -->
-<svg width="0" height="0">
-<filter id="distort">
-<feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise"/>
-<feDisplacementMap in="SourceGraphic" in2="noise" scale="60"/>
-</filter>
-</svg>
-
-<div id="intro">
-<button id="enterBtn">click to enter</button>
-</div>
+<div id="gate"><span>enter</span></div>
 
 <canvas id="bg"></canvas>
 
 <div class="center">
-<h1>z9ds</h1>
-<p class="subtitle">ZOT</p>
-
+<h1>Z9DS</h1>
+<p class="sub">ZOT</p>
 <div class="links">
 <a href="https://www.roblox.com/users/4377530875/profile" target="_blank">𝐑𝐨𝐛𝐥𝐨𝐱</a>
 <a href="https://discord.com/users/1261427193746292848" target="_blank">𝐃𝐢𝐬𝐜𝐨𝐫𝐝</a>
@@ -183,88 +127,72 @@ backdrop-filter:blur(12px);
 </div>
 
 <script>
-
-/* INTRO TRANSITION */
-const intro=document.getElementById("intro");
-const btn=document.getElementById("enterBtn");
-
-btn.addEventListener("click",()=>{
-intro.classList.add("crumble");
-setTimeout(()=>{
-intro.style.display="none";
-},1400);
+const gate=document.getElementById("gate");
+gate.addEventListener("click",()=>{
+gate.classList.add("fold");
+setTimeout(()=>{gate.style.display="none"},900);
 });
 
-/* GALAXY */
-const canvas=document.getElementById("bg");
-const ctx=canvas.getContext("2d");
+const c=document.getElementById("bg");
+const x=c.getContext("2d");
+let stars=[],cx,cy;
 
-let particles=[];
-let cx,cy;
-
-function resize(){
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-cx=canvas.width/2;
-cy=canvas.height/2;
+function size(){
+c.width=innerWidth;
+c.height=innerHeight;
+cx=c.width/2;
+cy=c.height/2;
 }
 
-function create(){
-particles=[];
-const count=window.innerWidth<768?900:2000;
-const max=Math.sqrt(canvas.width**2+canvas.height**2)/2;
-
+function make(){
+stars=[];
+let count=innerWidth<768?900:2000;
+let max=Math.sqrt(c.width*c.width+c.height*c.height)/2;
 for(let i=0;i<count;i++){
-particles.push({
-angle:Math.random()*Math.PI*2,
-radius:Math.random()*max,
-speed:Math.random()*0.0015+0.0005,
-size:Math.random()<0.15?2:1,
-depth:Math.random()*0.7+0.3
+stars.push({
+a:Math.random()*Math.PI*2,
+r:Math.random()*max,
+s:Math.random()*0.0015+0.0005,
+z:Math.random()*0.7+0.3,
+d:Math.random()<.15?2:1
 });
 }
 }
 
 function draw(){
-ctx.fillStyle="#000";
-ctx.fillRect(0,0,canvas.width,canvas.height);
+x.fillStyle="#000";
+x.fillRect(0,0,c.width,c.height);
 
-const g=ctx.createRadialGradient(
-cx,cy,0,
-cx,cy,Math.max(canvas.width,canvas.height)
-);
+let g=x.createRadialGradient(cx,cy,0,cx,cy,Math.max(c.width,c.height));
 g.addColorStop(0,"rgba(255,255,255,.9)");
 g.addColorStop(1,"rgba(255,255,255,.05)");
+x.fillStyle=g;
 
-ctx.fillStyle=g;
-
-particles.forEach(p=>{
-p.angle+=p.speed*(0.6+p.depth);
-const x=cx+Math.cos(p.angle)*p.radius;
-const y=cy+Math.sin(p.angle)*p.radius;
-ctx.globalAlpha=p.depth;
-ctx.fillRect(x,y,p.size,p.size);
+stars.forEach(s=>{
+s.a+=s.s*(.6+s.z);
+let px=cx+Math.cos(s.a)*s.r;
+let py=cy+Math.sin(s.a)*s.r;
+x.globalAlpha=s.z;
+x.fillRect(px,py,s.d,s.d);
 });
-
-ctx.globalAlpha=1;
+x.globalAlpha=1;
 requestAnimationFrame(draw);
 }
 
-window.addEventListener("resize",()=>{
-resize();
-create();
+addEventListener("resize",()=>{
+size();
+make();
 });
 
-window.addEventListener("mousemove",e=>{
-if(window.innerWidth<768)return;
-cx=canvas.width/2+(e.clientX-canvas.width/2)*0.05;
-cy=canvas.height/2+(e.clientY-canvas.height/2)*0.05;
+addEventListener("mousemove",e=>{
+if(innerWidth<768)return;
+cx=c.width/2+(e.clientX-c.width/2)*.05;
+cy=c.height/2+(e.clientY-c.height/2)*.05;
 });
 
-resize();
-create();
+size();
+make();
 draw();
-
 </script>
 
 </body>
