@@ -25,12 +25,42 @@ cursor:none;
 overflow:hidden;
 }
 
+#gate{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#000;
+z-index:10;
+transition:opacity .8s ease;
+}
+
+#gate span{
+font-size:14px;
+letter-spacing:4px;
+opacity:0.6;
+transition:0.25s;
+cursor:pointer;
+}
+
+#gate span:hover{
+opacity:1;
+}
+
 .center{
 position:fixed;
 top:50%;
 left:50%;
-transform:translate(-50%,-50%);
+transform:translate(-50%,-50%) scale(0.95);
 text-align:center;
+opacity:0;
+transition:opacity .8s ease, transform .8s ease;
+}
+
+.center.show{
+opacity:1;
+transform:translate(-50%,-50%) scale(1);
 }
 
 h1{
@@ -90,7 +120,6 @@ box-shadow:
 0 0 25px rgba(255,255,255,0.7),
 0 0 50px rgba(255,255,255,0.4);
 }
-
 .empty-btn{
 position:fixed;
 bottom:20px;
@@ -101,6 +130,11 @@ border-radius:12px;
 border:1px solid rgba(255,255,255,0.25);
 background:rgba(255,255,255,0.08);
 transition:0.25s;
+opacity:0;
+}
+
+.empty-btn.show{
+opacity:1;
 }
 
 .empty-btn:hover{
@@ -113,7 +147,11 @@ transform:scale(1.05);
 
 <body>
 
-<div class="center">
+<div id="gate">
+<span>CLICK</span>
+</div>
+
+<div class="center" id="main">
 <h1>Z9DS</h1>
 <p class="sub">ZOT</p>
 
@@ -129,15 +167,27 @@ transform:scale(1.05);
 </div>
 
 <div class="cursor" id="cursor"></div>
-
-<div class="empty-btn"></div>
+<div class="empty-btn" id="btn"></div>
 
 <script>
 const cursor = document.getElementById("cursor");
+const gate = document.getElementById("gate");
+const main = document.getElementById("main");
+const btn = document.getElementById("btn");
 
 window.addEventListener("mousemove", e=>{
 cursor.style.left = e.clientX + "px";
 cursor.style.top = e.clientY + "px";
+});
+
+gate.addEventListener("click", ()=>{
+gate.style.opacity = "0";
+
+setTimeout(()=>{
+gate.style.display = "none";
+main.classList.add("show");
+btn.classList.add("show");
+}, 600);
 });
 </script>
 
